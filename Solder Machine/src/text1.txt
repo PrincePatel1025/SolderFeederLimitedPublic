@@ -1,0 +1,110 @@
+#include <Arduino.h>
+
+int dataLatch = 12; // 12 on chip
+int dataClock = 11; // 11 on chip
+int dataOut = 2;    // 14 on chip
+int x = 4;
+
+void setData(const int latch, const int dataClock, const int dataOut, const int data);
+void setData(const int data);
+void extrude(float distance);
+
+void setup()
+{
+  pinMode(dataLatch, OUTPUT);
+  pinMode(dataClock, OUTPUT);
+  pinMode(dataOut, OUTPUT);
+  pinMode(x, OUTPUT);
+
+  setData(0);
+
+  Serial.begin(115200);
+}
+unsigned long start = 0UL;
+unsigned long end = 0UL;
+unsigned long y = 0UL;
+float avg = 0.00;
+void loop()
+{
+  // avg = 0;
+  // for (int i = 0; i < 5*1600; i++)
+  // {
+  // start = millis();
+  // digitalWrite(x, HIGH);
+  // delayMicroseconds(65);
+  // digitalWrite(x, LOW);
+  // delayMicroseconds(65);
+  // end = millis();
+  // Serial.print(start);
+  // Serial.print("     ");
+  // Serial.print(end);
+  // Serial.println("     ");
+  // avg += (end - start);
+  //}
+  // avg /= 30000;
+  // Serial.println(avg, 6);
+  // delay(10000);
+
+  // avg = 0;
+  for (int i = 0; i < 10 * 1600; i++)
+  {
+    // start = millis();
+    // setData(8);
+    digitalWrite(x, HIGH);
+    delayMicroseconds(65);
+    // setData(4);
+    digitalWrite(x, LOW);
+    delayMicroseconds(65);
+    //  end = millis();
+    //  Serial.print(start);
+    //  Serial.print("     ");
+    //  Serial.print(end);
+    //  Serial.println("     ");
+    //  avg += (end - start);
+  }
+  // avg /= 30000;
+  // Serial.println(avg, 6);
+  // delay(10000);
+}
+
+void setData(const int latch, const int dataClock, const int dataOut, const int data)
+{
+  digitalWrite(dataLatch, LOW);
+  shiftOut(dataOut, dataClock, MSBFIRST, (uint8_t)data);
+  digitalWrite(dataLatch, HIGH);
+}
+
+void setData(const int data)
+{
+  setData(dataLatch, dataClock, dataOut, data);
+}
+
+void extrude(float distance)
+{
+  // float steps = (distance / (float)0.021);
+}
+
+
+
+
+
+
+
+
+  int x = 251
+  ;
+  for (int i = 0; i < 8; i++)
+  {
+    Serial.println((x & 1), BIN);
+    x >>= 1;
+  }
+
+x = 251;
+  Serial.println("Done");
+
+  for (int i = 0; i < 8; i++)
+  {
+    Serial.println((x & 128) > 0, BIN);
+    x <<= 1;
+  }
+  delay(10000000);
